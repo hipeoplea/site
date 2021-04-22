@@ -1,0 +1,53 @@
+    user = User()
+    user2 = User()
+    user3 = User()
+
+    team1 = Teams()
+    team2 = Teams()
+    team3 = Teams()
+
+    task = Tasks()
+    task2 = Tasks()
+
+    adm = User()
+
+    team1.name = 'team1'
+    team1.password_hash = generate_password_hash('password')
+
+    team2.name = 'team2'
+    team2.password_hash = generate_password_hash('password2')
+
+    team3.name = 'Admins'
+    team3.password_hash = generate_password_hash('admin_password')
+
+    user.username = 'user'
+    user.team = team1.name
+
+    user2.username = 'user2'
+    user2.team = team2.name
+
+    user3.username = 'user3'
+    user3.team = team1.name
+
+    task.body = 'задача1'
+    task.test = '1task.py'
+    task.max_price = 100
+
+    task2.body = 'задача2'
+    task2.test = '2task.py'
+    task2.max_price = 100
+
+    adm.username = 'admin'
+    adm.team = team3.name
+    adm.role = 1
+    db_sess = db_session.create_session()
+    db_sess.add(team1)
+    db_sess.add(team2)
+    db_sess.add(user)
+    db_sess.add(user2)
+    db_sess.add(user3)
+    db_sess.add(adm)
+    db_sess.add(task)
+    db_sess.add(task2)
+    db_sess.add(team3)
+    db_sess.commit()

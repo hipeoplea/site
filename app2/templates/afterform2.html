@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/for_afterform.css" type="text/css">
+    <meta http-equiv="refresh" content="5;{{ url_for('addteam') }}">
+
+</head>
+<body>
+<nav>
+    <ul class="topmenu">
+        <li><a class="down">Меню</a>
+            <ul class="submenu">
+                <li><a href="{{ url_for('admin') }}">Статистика</a></li>
+                  <li><a href="{{ url_for('addtasks') }}">Добавить задачу</a></li>
+                  <li><a href="{{ url_for('addteam') }}">Добавить команду</a></li>
+                  <li><a href="{{ url_for('logout') }}">Выход</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<h1>Команда {{ teamname }} успешно добавлено!</h1>
+<h1>Пароль: {{ password }}</h1>
+</body>
+</html>

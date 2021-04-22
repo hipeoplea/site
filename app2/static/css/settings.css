@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #333;
+  grid-area: 1 / 1 / 6 / 6;
+  display: grid;
+}
+
+
+
+h1 {
+  font-size: 60pt;
+}
+.topmenu {grid-area: 1 / 4 / 2 / 5;}
+nav {
+
+  display: contents;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  order: 1;
+}
+
+nav a {
+  text-decoration: none;
+  display: block;
+  color: #E2E70B;
+}
+
+.topmenu {
+  text-align: end;
+  margin: 15px;
+}
+
+.topmenu>li {
+  display: inline-block;
+  position: relative;
+}
+
+.topmenu>li>a {
+  position: relative;
+  padding: 10px 15px;
+  font-family: 'Kaushan Script', cursive;
+  font-size: 1.5em;
+  line-height: 1;
+  letter-spacing: 3px;
+}
+
+.topmenu>li>a:before {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 100%;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  transition: .3s;
+}
+
+.topmenu li:hover a:before {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.submenu {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 100%;
+  padding: 15px;
+  margin-top: 5px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0), #791AA7);
+  border-radius: 5px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: .3s;
+}
+
+.topmenu>li:hover .submenu {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.submenu a {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  transition: .2s linear;
+  text-align: center;
+}
+
+.submenu a:hover {
+  background: #d64ecf98;
+}
+
+.border-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 30px;
+  left: 55%;
+  color: c3c3c3;
+  border: 1px solid rgba(255, 255, 255, .4);
+  background: none;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  max-height: 1em;
+  align-self: flex-end;
+}
+
+main{
+grid-area: 1 / 2 / 6 / 5;
+background: #535353;
+}
+
+.com{
+grid-area: 5 / 4 / 6 / 5;}
+.com a{
+margin-top:0.1em;
+    font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #fafafa;
+	padding: 16px 26px;
+	display: inline-block;
+	text-decoration: none;
+	border-radius: 3px;
+	align-self: flex-end;
+
+}
+.com a:hover {
+	background: #535353;
+
+}
+.com a:active {
+	position: relative;
+	top: 6px;
+	background: #484848;
+}

@@ -1,0 +1,178 @@
+[class^="icon"], [class*=" icon"] {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.patternwall {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+body {
+  font: 12px/22px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #333333;
+}
+
+.clear {
+  clear: both;
+}
+
+.box {
+  width: 300px;
+  margin: 120px auto;
+  position: relative;
+  z-index: 1;
+
+}
+
+.tabs {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: -39px;
+}
+.tabs a {
+  position: relative;
+   width: 43px;
+   height: 39px;
+  display: block;
+  margin-bottom: 10px;
+  padding-top: 7px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  -moz-box-shadow: 0 0 2px #1a1a1a;
+  box-shadow: 0 0 2px #1a1a1a;
+  border-radius: 5px 0px 0px 5px;
+
+}
+.tabs a.active, .tabs a:hover {
+  margin-left: -3px;
+}
+.tabs a:before {
+  font-size: 14px;
+  color: white;
+  padding-left: 10px;
+}
+
+.blueBox {
+  color: black;
+  border: solid 1px #C2C600;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #E2E70B), color-stop(100%, #C2C600));
+  background: -webkit-linear-gradient(#E2E70B, #C2C600);
+  background: -moz-linear-gradient(#E2E70B, #C2C600);
+  background: -o-linear-gradient(#E2E70B, #C2C600);
+  background: linear-gradient(#E2E70B, #C2C600);
+  cursor:pointer;
+  text-align: center;
+}
+
+.greenBox {
+  color: white;
+  border: solid 1px #600B89;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #791AA7), color-stop(100%, #600B89));
+  background: -webkit-linear-gradient(791AA7, #600B89);
+  background: -moz-linear-gradient(#791AA7, #600B89);
+  background: -o-linear-gradient(#791AA7, #600B89);
+  background: linear-gradient(#791AA7, #600B89);
+  cursor:pointer;
+  text-align: center;
+
+}
+
+
+.greenBox:hover, .blueBox:hover {opacity:0.9;} 
+
+.containerWrapper {
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow: 0 0 5px black;
+  box-shadow: 0 0 5px black;
+}
+
+.tabContainer {
+  display: none;
+  color: #C4C4C4;
+  padding: 20px;
+  background: #535353;
+  -webkit-transition: all 0.4s linear;
+  -moz-transition: all 0.4s linear;
+  -o-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+.tabContainer.active {
+  display: block;
+}
+
+.loginTitle {
+    color: #c4c4c4;
+    margin: 0 0 20px 0;
+    padding: 0 0 15px 0;
+    border-bottom: solid 1px #e6e6e6;
+    text-shadow: 1px 1px 0 black;
+}
+
+.placeholder {
+  height: 32px;
+  margin-bottom: 20px;
+}
+
+.inputWrapper {
+  height: 32px;
+  margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+}
+.inputWrapper:before {
+  content: '';
+  display: block;
+  height: 5px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-left: solid 1px #cccccc;
+  border-right: solid 1px #cccccc;
+  border-bottom: solid 1px #cccccc;
+}
+
+form h2 {font-family:Tahoma;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  color: #c4c4c4;
+  position: relative;
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  background: none;
+  padding: 0 10px;
+  font-size: 16px;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+input[type=text]:focus, input[type=password]:focus {
+  outline: none;
+  border: none;
+  border: 1px solid #cccccc;
+}
+
+.but {
+  float: right;
+  height: 32px;
+}
