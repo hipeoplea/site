@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="hipeoplea">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}">
+       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+ function initialize() {
+ var latlng = new google.maps.LatLng(131.895209,43.121747);
+ var settings = {
+ zoom: 11,
+ center: latlng,
+ mapTypeControl: true,
+ mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+ navigationControl: true,
+ navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+ mapTypeId: google.maps.MapTypeId.ROADMAP
+ };
+ var map = new google.maps.Map(document.getElementById("map_canvas"),
+settings);
+var companyPos = new google.maps.LatLng({{ coords }});
+var companyMarker = new google.maps.Marker({
+position: companyPos,
+map: map,
+title:"Some title"
+});
+}
+
+    </script>
+        <title>Cicada</title>
+    </head>
+    <body onload="initialize()">
+     <main>
+         <div class="rect"></div>
+         <h1 class="command">{{ param['team_name'] }}</h1>
+         <nav>
+            <ul class="topmenu">
+              <li><a class="down">Меню</a>
+                <ul class="submenu">
+                  <li><a>Главная</a></li>
+                  <li><a href="{{ url_for('logout') }}">Выход</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+                <table class="table panels">
+                    <tr>
+                        <th>Задачи</th>
+                    </tr>
+                    {% for i in range(param['tasks']|length) %}
+                    <tr>
+                            <td>{{param['tasks'][i]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+    <div id="map_canvas" class="map" style="position:relative;overflow:hidden;">
+        <div class="map_buttons"><div id="timer"></div>
+        <a class="border-button" id="button">qr</a></div></div>
+         <div class="com"><table>
+                    <tr><th>Члены команды</th></tr>
+             {% for i in range(6)%}
+             <tr><td>{{i + 1}}. {{param['teammates'][i]}}</td></tr>
+             {% endfor %}
+
+         </table></div>
+         <div class="status">
+             <div class="points">{{param['points']}}/{{param['max_points']}}</div>
+         </div>
+    </main>
+    </body>
+</html>
+
+

@@ -1,5 +1,5 @@
 .u-section-1 {
-  background-image: linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("images/40658f8fb859d3dcbbcbfd36b830dc7384b42ccb6b192368365e8f264b774fa6de78cc89dd86292ca4220a500931fad3eb7744a8cbbae45968c3ae_1280.jpg");
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("../images/laptop.jpg");
   background-position: 50% 50%;
 }
 
@@ -514,7 +514,7 @@
     margin-left: auto;
   }
 }.u-section-4 {
-  background-image: url("images/-1.png");
+  background-image: url("../images/map.png");
   background-position: 50% 50%;
 }
 

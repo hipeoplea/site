@@ -1,15 +1,11 @@
-import random
-
 from data import db_session
-from data.models import User, Teams, Tasks
-from flask import Flask, redirect, render_template, request
 from data import qrs as qrcode
+from data.models import User, Teams, Tasks
 from data.password import create_password
+from flask import Flask, redirect, render_template, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms import UserForm, AdminForm
 from werkzeug.security import check_password_hash, generate_password_hash
-
-
 
 UPLOAD_FOLDER = 'tests'
 ALLOWED_EXTENSIONS = {'py'}
@@ -64,11 +60,9 @@ def login():
                     return redirect("/user")
 
                 else:
-                    return render_template('index.html',
-                                           message="Команда заполненна :(",
+                    return render_template('login.html',
                                            form=userf, adm_form=admin)
-        return render_template('index.html',
-                               message="Неверный пароль :(",
+        return render_template('login.html',
                                form=userf, adm_form=admin)
 
     if admin.validate_on_submit():
@@ -84,10 +78,9 @@ def login():
             return redirect('/admin')
 
         else:
-            return render_template('index.html',
-                                   message="Неверный пароль :(",
+            return render_template('login.html',
                                    form=userf, adm_form=admin)
-    return render_template('index.html', title='Авторизация', form=userf, adm_form=admin)
+    return render_template('login.html', title='Авторизация', form=userf, adm_form=admin)
 
 
 @app.route('/logout')
@@ -103,24 +96,13 @@ def user():
     if current_user.role == 0:
         db_sess = db_session.create_session()
         params = {
-            'teammates': [x[0] for x in db_sess.query(User.username).filter(User.team == current_user.team).filter(
-                User != current_user)],
-            'tasks': [x for x in db_sess.query(Tasks.name).all()],
-            'team_name': current_user.team,
-            'points': [x[0] for x in db_sess.query(Tasks.max_price).filter(Tasks.id.in_(
-                [y for y in map(int,
-                                [x[0] for x in db_sess.query(Teams.open_tasks).filter(Teams.name == current_user.team)]
-                                [0].split())])).all()],
-            'opened': len([x[0] for x in db_sess.query(Teams.open_tasks).filter(Teams.name == current_user.team)]
-                          [0].split()),
-            'all_tasks': len(db_sess.query(Tasks.id).all()),
-            'point': db_sess.query(Teams.points).filter(Teams.name == current_user.team).first()[0],
-            'all_point': sum([x[0] for x in db_sess.query(Tasks.max_price).all()]),
-            'geo': [x for x in map(lambda x: (x.split(',')[::-1]),
-                                  [x[0] for x in db_sess.query(Tasks.coords).all()])],
-            'disct': [x for x in db_sess.query(Tasks.body).all()]
+            'teammates': [x[0] for x in db_sess.query(User.username).filter(User.team == current_user.team)],
+            'tasks': [x[0] for x in db_sess.query(Tasks.name).all()],
+            'points': [x[0] for x in db_sess.query(Teams.points).filter(Teams.name == current_user.team)][0],
+            'max_points': sum([x[0] for x in db_sess.query(Tasks.max_price).all()]),
+            'team_name': current_user.team
         }
-        return render_template('main.html', param=params, disct=params['disct'])
+        return render_template('user.html', param=params)
 
     else:
         return unauthorized_error(401)
@@ -137,9 +119,8 @@ def admin():
         team_list = []
         for i in param['team_list']:
             team_list.append([x for x in db_sess.query(Teams.points).filter(Teams.name == i).first()])
-            print(team_list)
         param['task_list'] = team_list
-        return render_template('aaa.html', teams=param['team_list'], tasks=param['task_list'],
+        return render_template('statistic.html', teams=param['team_list'], tasks=param['task_list'],
                                count=len(param['team_list']))
     else:
         return unauthorized_error(401)
@@ -150,13 +131,12 @@ def admin():
 def addtasks():
     if current_user.role == 1:
         if request.method == 'GET':
-            return render_template('for_2nd.html')
+            return render_template('add_task.html')
         elif request.method == 'POST':
             db_sess = db_session.create_session()
             task = Tasks()
             task.name = request.form['namepoint']  # название теста
             f = request.files['tests']
-            print(f.read())
             f.save('tests/testing.py')
             task.body = request.form['descriptpoint']  # описание
             task.max_price = request.form['number']  # баллы за тест
@@ -164,8 +144,8 @@ def addtasks():
             db_sess.add(task)
             db_sess.commit()
             qrcode.create_qr(task.body)
-            return render_template('afterform.html', taskname=request.form['namepoint'])
-        return render_template('for_2nd.html')
+            return render_template('add_task.html', taskname=request.form['namepoint'])
+        return render_template('add_task.html')
     else:
         return unauthorized_error(401)
 
@@ -176,7 +156,7 @@ def addteam():
     if current_user.role == 1:
         passw = create_password()
         if request.method == 'GET':
-            return render_template('for_3rdpage.html', password=passw)
+            return render_template('add_team.html', password=passw)
         elif request.method == 'POST':
             db_sess = db_session.create_session()
             team = Teams()
@@ -193,7 +173,7 @@ def addteam():
 def page_not_found(e):
     return render_template('404.html'), 404
 
-    
+
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
@@ -206,5 +186,4 @@ def unauthorized_error(e):
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
-    qrcode.create_qr('а вы любопытны:)')
     app.run()
