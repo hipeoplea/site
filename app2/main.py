@@ -6,6 +6,7 @@ from flask import Flask, redirect, render_template, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms import UserForm, AdminForm
 from werkzeug.security import check_password_hash, generate_password_hash
+import importlib
 
 UPLOAD_FOLDER = 'tests'
 ALLOWED_EXTENSIONS = {'py'}
@@ -108,8 +109,28 @@ def user():
         return unauthorized_error(401)
 
 
-@app.route('/admin')
+@app.route('/load_task', methods=['POST', 'GET'])
 @login_required
+def load_task():
+    if current_user.role == 0:
+        db_sess = db_session.create_session()
+        tasks = [x[0] for x in db_sess.query(Tasks.name)]
+        if request.method == 'GET':
+            return render_template('load_task.html', option=tasks)
+        elif request.method == 'POST':
+            task = request.form['namepoint']
+            f = request.files['tests']
+            f.save('tests/solution.py')
+            task_name = db_sess.query(Tasks.test).filter(Tasks.name == task).first()[0]
+            module = importlib.import_module('tests.'+ task_name)
+            module.testing()
+            return redirect("/user")
+        return render_template('load_task.html', option=tasks)
+    else:
+        return unauthorized_error(401)
+
+
+
 def admin():
     if current_user.role == 1:
         db_sess = db_session.create_session()
@@ -137,14 +158,15 @@ def addtasks():
             task = Tasks()
             task.name = request.form['namepoint']  # название теста
             f = request.files['tests']
-            f.save('tests/testing.py')
+            f.save(f'tests/{task.name}.py')
+            task.test = task.name
             task.body = request.form['descriptpoint']  # описание
             task.max_price = request.form['number']  # баллы за тест
-            task.coords = request.form['pcoord']  # координаты
+            task.coords = [''.join(request.form['pcoord'][::-1])]  # координаты
             db_sess.add(task)
             db_sess.commit()
             qrcode.create_qr(task.body)
-            return render_template('add_task.html', taskname=request.form['namepoint'])
+            return render_template('afterform.html', taskname=request.form['namepoint'])
         return render_template('add_task.html')
     else:
         return unauthorized_error(401)

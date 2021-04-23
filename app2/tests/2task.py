@@ -1,1 +1,0 @@
-# shamanim shamanim

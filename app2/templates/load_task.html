@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="">
+
+</head>
+<body>
+<form class="for_tests" enctype="multipart/form-data" id="formadd" name="formadd_point" method="post" action=""><p>
+    Задача:
+    <select name="namepoint">
+        {% for opt in option %}
+        <option>{{ opt }}</option>
+        {% endfor %}
+    </select>
+</p>Решение: <input name="tests" type=file class="files" accept=".py" required=""/>
+    <p>
+        <a href="{{url_for('user')}}"><button type="submit" class="btn btn-primary">Submit</button></a>
+    </p>
+</form>
+</body>
+</html>

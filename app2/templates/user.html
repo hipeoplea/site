@@ -1,73 +1,83 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="author" content="hipeoplea">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}">
-       <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nicepage.css')}}" media="screen">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Contact-1.css')}}" media="screen">
     <script type="text/javascript">
- function initialize() {
- var latlng = new google.maps.LatLng(131.895209,43.121747);
- var settings = {
- zoom: 11,
- center: latlng,
- mapTypeControl: true,
- mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
- navigationControl: true,
- navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
- mapTypeId: google.maps.MapTypeId.ROADMAP
- };
- var map = new google.maps.Map(document.getElementById("map_canvas"),
-settings);
-var companyPos = new google.maps.LatLng({{ coords }});
-var companyMarker = new google.maps.Marker({
-position: companyPos,
-map: map,
-title:"Some title"
-});
-}
-
     </script>
-        <title>Cicada</title>
-    </head>
-    <body onload="initialize()">
-     <main>
-         <div class="rect"></div>
-         <h1 class="command">{{ param['team_name'] }}</h1>
-         <nav>
-            <ul class="topmenu">
-              <li><a class="down">Меню</a>
-                <ul class="submenu">
-                  <li><a>Главная</a></li>
-                  <li><a href="{{ url_for('logout') }}">Выход</a></li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-                <table class="table panels">
-                    <tr>
-                        <th>Задачи</th>
-                    </tr>
-                    {% for i in range(param['tasks']|length) %}
-                    <tr>
-                            <td>{{param['tasks'][i]}}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-    <div id="map_canvas" class="map" style="position:relative;overflow:hidden;">
-        <div class="map_buttons"><div id="timer"></div>
-        <a class="border-button" id="button">qr</a></div></div>
-         <div class="com"><table>
-                    <tr><th>Члены команды</th></tr>
-             {% for i in range(6)%}
-             <tr><td>{{i + 1}}. {{param['teammates'][i]}}</td></tr>
-             {% endfor %}
-
-         </table></div>
-         <div class="status">
-             <div class="points">{{param['points']}}/{{param['max_points']}}</div>
-         </div>
-    </main>
-    </body>
+</head>
+<body onload="init">
+<section class="u-align-left u-clearfix u-grey-90 u-section-1" id="carousel_2f77">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+            <div class="u-layout">
+                <div class="u-layout-row">
+                    <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-layout-cell-1">
+                        <div class="u-container-layout u-container-layout-1">
+                            <h2 class="u-text u-text-1">{{ param['team_name'] }}</h2>
+                            <div class="u-table u-table-responsive u-table-1">
+                                <table class="u-table-entity">
+                                    <colgroup>
+                                        <col width="100%">
+                                    </colgroup>
+                                    <thead class="u-palette-2-base u-table-header u-table-header-1">
+                                    <tr style="height: 53px;">
+                                        <th class="u-table-cell u-table-cell-1">Члены команды</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="u-table-body">
+                                    {% for i in range(6)%}
+                                    <tr>
+                                        <td>{{i + 1}}. {{param['teammates'][i]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="u-shape u-shape-svg u-text-palette-2-base u-shape-1">
+                                <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 120" style="">
+                                    <use xlink:href="#svg-471d"></use>
+                                </svg>
+                                <svg class="u-svg-content" viewBox="0 0 160 120" x="0px" y="0px" id="svg-471d">
+                                    <path d="M126.9,120H0L33.1,0H160L126.9,120z"></path>
+                                </svg>
+                            </div>
+                            <div class="u-table u-table-responsive u-table-2">
+                                <table class="u-table-entity">
+                                    <colgroup>
+                                        <col width="100%">
+                                    </colgroup>
+                                    <thead class="u-palette-2-base u-table-header u-table-header-2">
+                                    <tr style="height: 61px;">
+                                        <th class="u-table-cell u-table-cell-8">Задачи</th>
+                                    </tr>
+                                    {% for i in range(param['tasks']|length) %}
+                                    <tr>
+                                        <td><a href="load_task">{{param['tasks'][i]}}</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <div id="map_canvas" class="map" style="position:relative;overflow:hidden;">
+                                <div class="map_buttons">
+                                    <div id="timer"></div>
+                                    <div class="u-container-style u-group u-palette-2-base u-radius-30 u-shape-round u-group-1">
+                                        <div class="u-container-layout u-container-layout-2">
+                                            <h3 class="u-align-center u-text u-text-default u-text-2">Очки</h3>
+                                            <h4 class="u-align-center u-text u-text-default u-text-3">
+                                                {{param['points']}}/{{param['max_points']}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
 </html>
-
-
